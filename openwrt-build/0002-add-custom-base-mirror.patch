@@ -1,0 +1,24 @@
+From 873c464620df619f0cb7a63287eb19ada0f4b54b Mon Sep 17 00:00:00 2001
+From: Vadim Panov <vadim.v.panov@gmail.com>
+Date: Mon, 31 Oct 2016 03:09:20 +0800
+Subject: [PATCH 2/2] add custom base mirror
+
+---
+ package/system/opkg/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/package/system/opkg/Makefile b/package/system/opkg/Makefile
+index 76688f5..bd39203 100644
+--- a/package/system/opkg/Makefile
++++ b/package/system/opkg/Makefile
+@@ -117,6 +117,7 @@ define Package/opkg/Default/install
+ 	$(INSTALL_DATA) ./files/customfeeds.conf $(1)/etc/opkg/customfeeds.conf
+ 	$(INSTALL_DATA) ./files/opkg$(2).conf $(1)/etc/opkg.conf
+ 	$(call FeedSourcesAppend,$(1)/etc/opkg/distfeeds.conf)
++	echo "src/gz base_up http://www.mywifi.at/openwrt/chaos_calmer/%T/packages/base" >> $(1)/etc/opkg/distfeeds.conf
+ 	$(VERSION_SED) $(1)/etc/opkg/distfeeds.conf
+ 	$(INSTALL_BIN) ./files/20_migrate-feeds $(1)/etc/uci-defaults/
+ 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/opkg-cl $(1)/bin/opkg
+-- 
+2.7.4
+

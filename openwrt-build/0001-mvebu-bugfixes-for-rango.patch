@@ -1,0 +1,39 @@
+From 293e8a0ae43be4228d662947908c940a64043205 Mon Sep 17 00:00:00 2001
+From: Vadim Panov <vadim.v.panov@gmail.com>
+Date: Mon, 24 Oct 2016 03:13:23 +0800
+Subject: [PATCH] mvebu: bugfixes for rango
+
+---
+ target/linux/mvebu/base-files/etc/uci-defaults/03_wireless              | 2 +-
+ target/linux/mvebu/files/arch/arm/boot/dts/armada-385-linksys-rango.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/linux/mvebu/base-files/etc/uci-defaults/03_wireless b/target/linux/mvebu/base-files/etc/uci-defaults/03_wireless
+index fcf43ee..76e1256 100644
+--- a/target/linux/mvebu/base-files/etc/uci-defaults/03_wireless
++++ b/target/linux/mvebu/base-files/etc/uci-defaults/03_wireless
+@@ -10,7 +10,7 @@
+ board=$(mvebu_board_name)
+ 
+ case "$board" in
+-armada-385-linksys-caiman|armada-385-linksys-cobra|armada-385-linksys-shelby|armada-xp-linksys-mamba)
++armada-385-linksys-caiman|armada-385-linksys-cobra|armada-385-linksys-rango|armada-385-linksys-shelby|armada-xp-linksys-mamba)
+ 	SKU=$(strings /dev/mtd3|sed -ne 's/^cert_region=//p')
+ 	case "$SKU" in
+ 		AP)
+diff --git a/target/linux/mvebu/files/arch/arm/boot/dts/armada-385-linksys-rango.dts b/target/linux/mvebu/files/arch/arm/boot/dts/armada-385-linksys-rango.dts
+index de63b83..c91afd0 100644
+--- a/target/linux/mvebu/files/arch/arm/boot/dts/armada-385-linksys-rango.dts
++++ b/target/linux/mvebu/files/arch/arm/boot/dts/armada-385-linksys-rango.dts
+@@ -320,7 +320,7 @@
+ 		pinctrl-names = "default";
+ 
+ 		power {
+-			gpios = <&gpio1 25 GPIO_ACTIVE_HIGH>;
++			gpios = <&gpio1 24 GPIO_ACTIVE_HIGH>;
+ 			default-state = "on";
+ 		};
+ 
+-- 
+2.7.4
+

@@ -1,11 +1,15 @@
 #!/bin/sh
 
 docker run --rm -it -v $(pwd)/out-cc:/opt/openwrt vpanov/openwrt-build  sh -c "\
+	wget http://launchpadlibrarian.net/274677369/b43-fwcutter_019-3_amd64.deb && \
+	dpkg -i b43*deb && \
+	export PATH=\$PATH:/opt/openwrt/tools/b43-tools/files && \
+	\
 	cd /opt && (test -d openwrt/.git ||  git clone -b chaos_calmer git://github.com/openwrt/openwrt.git) && \
 	\
-	echo 'CONFIG_TARGET_mvebu=y'                >  /opt/openwrt/.config && \
-	echo 'CONFIG_TARGET_mvebu_Default=y'        >> /opt/openwrt/.config && \
-	echo 'CONFIG_TARGET_BOARD=\"mvebu\"'        >> /opt/openwrt/.config && \
+	echo 'CONFIG_TARGET_sunxi=y'                >  /opt/openwrt/.config && \
+	echo 'CONFIG_TARGET_sunxi_Default=y'        >> /opt/openwrt/.config && \
+	echo 'CONFIG_TARGET_BOARD=\"sunxi\"'        >> /opt/openwrt/.config && \
 	echo 'CONFIG_ALL=y'                         >> /opt/openwrt/.config && \
 	echo 'CONFIG_ALL_KMODS=y'                   >> /opt/openwrt/.config && \
 	echo 'CONFIG_IB=y'                          >> /opt/openwrt/.config && \
