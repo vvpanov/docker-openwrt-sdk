@@ -13,6 +13,7 @@ RUN \
 		wget \
 		xsltproc \
 		zlib1g-dev \
+		zip \
 		&& \
 	rm -rf /var/lib/apt/lists/* && \
 	\

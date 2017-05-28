@@ -1,5 +1,7 @@
 FROM vpanov/openwrt-build
 
+# using sed to replace cp -fpR to cp -fR to let it work on osx with its weird docker virtual fs
+
 RUN \
 	wget http://mywifi.at/openwrt/chaos_calmer/mvebu/OpenWrt-ImageBuilder-mvebu.Linux-x86_64.tar.bz2 \
 		-O /tmp/imagebuilder.tar.bz2 && \
@@ -43,6 +45,7 @@ CgyxFBlO3J65jTciPqc5nqe9htdYqOdRT8astoDnpRYF8UMzKeEHp+NeNBz1JXywURdz16PY0ROm\
 pGqW/mOTAQrgfrZ1+e2R2G/0L5o7WWkNNgjuHMUderGdql7HZKFGZvEa9onm0yJJcWKmScQ2gzTO\
 nx0kAAAAUqxyXBE4mCgAAZ4G4xAAAOgblbOxxGf7AgAAAAAEWVo=' \
 		| base64 -d | xz -d > /opt/Makefile && \
+	sed -i -e 's/cp -fpR/cp -fR/' /opt/*/rules.mk && \
 	echo OK!
 
 WORKDIR /opt
