@@ -1,0 +1,5 @@
+diff -urN a/m4/libuv-extra-automake-flags.m4 libuv-v1.10.2/m4/libuv-extra-automake-flags.m4
+--- a/m4/libuv-extra-automake-flags.m4	1970-01-01 08:00:00.000000000 +0800
++++ libuv-v1.10.2/m4/libuv-extra-automake-flags.m4	2017-08-02 12:16:32.000000000 +0800
+@@ -0,0 +1 @@
++m4_define([UV_EXTRA_AUTOMAKE_FLAGS], [serial-tests])
