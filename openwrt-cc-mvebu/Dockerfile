@@ -46,6 +46,44 @@ pGqW/mOTAQrgfrZ1+e2R2G/0L5o7WWkNNgjuHMUderGdql7HZKFGZvEa9onm0yJJcWKmScQ2gzTO\
 nx0kAAAAUqxyXBE4mCgAAZ4G4xAAAOgblbOxxGf7AgAAAAAEWVo=' \
 		| base64 -d | xz -d > /opt/Makefile && \
 	sed -i -e 's/cp -fpR/cp -fR/' /opt/*/rules.mk && \
+	\
+	echo Adding fix for rango DTS && \
+	cd /opt/ImageBuilder/build_dir && \
+	cd target-arm_cortex-a9+vfpv3_uClibc-0.9.33.2_eabi && \
+	cd linux-mvebu/linux-3.18.44/arch/arm/boot/dts && \
+	\
+	../../../../scripts/dtc/dtc -I dtb -O dts armada-385-linksys-rango.dtb > \
+			armada-385-linksys-rango.quickfix.dts && \
+	\
+	sed -i~ 's/gpio = <0xd 0x10/gpio = <0xd 0xc/' \
+		armada-385-linksys-rango.quickfix.dts && \
+	sed -i~ 's/mpp47/mpp44/' \
+		armada-385-linksys-rango.quickfix.dts && \
+	echo TODO: mpp47 controls its power, it is ON on boot && \
+	echo 'LS0tIGFybWFkYS0zODUtbGlua3N5cy1yYW5nby5x\
+dWlja2ZpeC5kdHMKKysrIGFybWFkYS0zODUtbGlu\
+a3N5cy1yYW5nby5xdWlja2ZpeC5kdHMKQEAgLTQ0\
+OSwzICs0NDksMyBAQAogCQkJCWNsb2NrcyA9IDww\
+eDcgMHgxMj47Ci0JCQkJc3RhdHVzID0gImRpc2Fi\
+bGVkIjsKKwkJCQlzdGF0dXMgPSAib2theSI7CiAJ\
+CQl9Owo=' | base64 -d | patch && \
+	../../../../scripts/dtc/dtc -I dts -O dtb \
+		armada-385-linksys-rango.quickfix.dts > \
+		armada-385-linksys-rango.dtb && \
+	\
+	cd /opt/ImageBuilder/build_dir && \
+	cd target-arm_cortex-a9+vfpv3_uClibc-0.9.33.2_eabi && \
+	cd linux-mvebu && \
+	cp zImage zImage-armada-385-linksys-rango && \
+	cat linux-3.18.44/arch/arm/boot/dts/armada-385-linksys-rango.dtb >> \
+		zImage-armada-385-linksys-rango && \
+	/opt/SDK/staging_dir/host/bin/mkimage \
+		-A arm -O linux -T kernel -C none \
+		-a 0x00008000 -e 0x00008000 \
+		-n 'ARM OpenWrt Linux-3.18.44'\
+		-d zImage-armada-385-linksys-rango \
+		uImage-armada-385-linksys-rango && \
+	\
 	echo OK!
 
 WORKDIR /opt
