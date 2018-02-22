@@ -59,7 +59,8 @@ nx0kAAAAUqxyXBE4mCgAAZ4G4xAAAOgblbOxxGf7AgAAAAAEWVo=' \
 		armada-385-linksys-rango.quickfix.dts && \
 	sed -i~ 's/mpp47/mpp44/' \
 		armada-385-linksys-rango.quickfix.dts && \
-	echo TODO: mpp47 controls its power, it is ON on boot && \
+	\
+	`#TODO: mpp47 controls its power, it is ON on boot` && \
 	echo 'LS0tIGFybWFkYS0zODUtbGlua3N5cy1yYW5nby5x\
 dWlja2ZpeC5kdHMKKysrIGFybWFkYS0zODUtbGlu\
 a3N5cy1yYW5nby5xdWlja2ZpeC5kdHMKQEAgLTQ0\
@@ -67,6 +68,13 @@ OSwzICs0NDksMyBAQAogCQkJCWNsb2NrcyA9IDww\
 eDcgMHgxMj47Ci0JCQkJc3RhdHVzID0gImRpc2Fi\
 bGVkIjsKKwkJCQlzdGF0dXMgPSAib2theSI7CiAJ\
 CQl9Owo=' | base64 -d | patch && \
+	\
+	`# for wrt3200acm with newer nand` && \
+	echo '/Td6WFoAAATm1rRGAgAhARYAAAB0L+Wj4AEbALRdABboBAwnI3dgRWFiL+fpXkccmYrR5fZRzcYT\
+YtiJnUWKHfXP/agstDznYDRsP8nijODJuQHQCnB7C5Nb8VKU+iYFq8nhKe/QIZ+knJ4bmkm/pV1y\
+2OCDu2AjMMjvytulWeHhdrklYeygg/MKmoob/sMQmvPGd+abTUbXrnPjeY7vYoL4AKqApvucLfcR\
+KUVP2h4MihRvs8Fn4ovTIXxUT6MDtf6XB+z2nqIwbCrTZDAIqylKgAAy5fVFuSjnowAB0AGcAgAA\
+MGsZGLHEZ/sCAAAAAARZWg==' | base64 -d | xz -d | patch && \
 	../../../../scripts/dtc/dtc -I dts -O dtb \
 		armada-385-linksys-rango.quickfix.dts > \
 		armada-385-linksys-rango.dtb && \
